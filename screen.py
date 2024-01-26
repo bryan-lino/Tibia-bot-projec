@@ -6,7 +6,7 @@ import cv2
 
 ## Put the name of the game window
 ### Put the name of the OBS window in "source" mode if you playing Tibia Global Servers
-WINDOW_TITLE = "Antiga - Baron"
+WINDOW_TITLE = "NAME OF THE GAME WINDOW"
 HWND = win32gui.FindWindow(None, WINDOW_TITLE)
 print('HWND ->', HWND)
 
@@ -125,7 +125,6 @@ def find_image(main_image, template):
         for pt in zip(*loc[::-1]):
             top_left = pt
             bottom_right = (pt[0] + w, pt[1] + h)
-            # Calcula o centro da imagem encontrada
             center_x = pt[0] + w // 2
             center_y = pt[1] + h // 2
             result = (center_x, center_y)

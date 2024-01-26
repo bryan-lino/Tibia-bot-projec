@@ -37,7 +37,7 @@ def send_message_keyboard(hwnd, key_code):
 
 # Works on any OT or Tibia Global
 ## Put the name of the game window here
-hwnd = ctypes.windll.user32.FindWindowW(0, 'Antiga - Baron') 
+hwnd = ctypes.windll.user32.FindWindowW(0, 'NAME OF THE GAME WINDOW') 
 
 def send_key_to_window(hwnd, scan_code):
     lParam_down = (1 << 0) | (scan_code << 16)
