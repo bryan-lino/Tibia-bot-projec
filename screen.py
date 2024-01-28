@@ -3,13 +3,13 @@ from ctypes import windll
 import win32gui
 import win32ui
 import cv2
+from numpy import random
 
 ## Put the name of the game window
 ### Put the name of the OBS window in "source" mode if you playing Tibia Global Servers
-WINDOW_TITLE = "NAME OF THE GAME WINDOW"
+WINDOW_TITLE = "Antiga - Baron"
 HWND = win32gui.FindWindow(None, WINDOW_TITLE)
 print('HWND ->', HWND)
-
 
 class WindowScreenshot:
     def __init__(self):
@@ -38,7 +38,6 @@ class WindowScreenshot:
                     self.result = windll.user32.PrintWindow(HWND, self.save_dc.GetSafeHdc(), 3)
                     self.bmpinfo = self.bitmap.GetInfo()
                     self.bmpstr = self.bitmap.GetBitmapBits(True)
-
                     self._valid_dc = True
                 except win32ui.error as e:
                     win32gui.ReleaseDC(HWND, self.hwnd_dc)
@@ -49,7 +48,6 @@ class WindowScreenshot:
                 win32gui.ReleaseDC(HWND, self.hwnd_dc)
                 self.mfc_dc = None
                 self._valid_dc = False
-
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -109,7 +107,6 @@ class WindowScreenshot:
             return img[y:y+height, x:x+width]
         return img
 
-
 def find_image(main_image, template):
     for i in template: 
         r_template = cv2.imread(i)
@@ -129,12 +126,7 @@ def find_image(main_image, template):
             center_y = pt[1] + h // 2
             result = (center_x, center_y)
             break
-
         if result:
-            # cv2.rectangle(main_image, top_left, bottom_right, (0, 255, 0), 2)
-            # cv2.imshow("Found Image", main_image)
-            # cv2.waitKey(0)
-            # cv2.destroyAllWindows()
             return result
     return None
 
