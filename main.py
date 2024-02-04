@@ -32,7 +32,7 @@ F12 = 0x7B
 np.food = ('images/fish.png', 'images/meat_1.png', 'images/meat_2.png', 'images/meat_3.png', 'images/meat_4.png', 'images/meat_5.png', 'images/ham_1.png', 'images/ham_2.png', 'images/ham_3.png', 'images/ham_4.png', 'images/ham_5.png')
 np.water = ('images/water_0.png', 'images/water_1.png', 'images/water_2.png', 'images/water_3.png', 'images/water_4.png', 'images/water_5', 'images/water_6', 'images/water_7', 'images/water_8')
 np.fishingRod = ('images/fishing_rod.png', 'images/fishing_rod2.png', 'images/fishing_rod3.png')
-np.spear = ('spear_1.png', 'spear_2.png')
+np.spear = ('images/spear_1.png', 'images/spear_2.png', 'images/spear_3.png', 'images/spear_4.png')
 
 def send_message_keyboard(hwnd, key_code):
     ctypes.windll.user32.SendMessageW(hwnd, WM_KEYDOWN, key_code, 0)
@@ -62,14 +62,14 @@ def click(hwnd, x, y, button='left'):
     lParam = (y << 16) | x
     if button == 'left':
         ctypes.windll.user32.SendMessageW(hwnd, WM_LBUTTONDOWN, 1, lParam)
-        time.sleep(0.015)
+        time.sleep(0.015) 
         ctypes.windll.user32.SendMessageW(hwnd, WM_LBUTTONUP, 0, lParam)
         return
     ctypes.windll.user32.SendMessageW(hwnd, WM_RBUTTONDOWN, 0, lParam)
     time.sleep(0.015)
     ctypes.windll.user32.SendMessageW(hwnd, WM_RBUTTONUP, 0, lParam)
 
-def dragTo(hwnd, x, y, button='left'):
+def drag(hwnd, x, y, button='left'):
     x = int(x)
     y = int(y)
     lParam = (y << 16) | x
@@ -78,12 +78,12 @@ def dragTo(hwnd, x, y, button='left'):
         return
     ctypes.windll.user32.SendMessageW(hwnd, WM_RBUTTONDOWN, 0, lParam)
 
-def deploy(hwnd, x, y, button='left'):
+def release(hwnd, x, y, button='left'):
     x = int(x)
     y = int(y)
     lParam = (y << 16) | x
     if button == 'left':
-        ctypes.windll.user32.SendMessageW(hwnd, WM_LBUTTONUP, 1, lParam)
+        ctypes.windll.user32.SendMessageW(hwnd, WM_LBUTTONUP, 0, lParam)
         return
     ctypes.windll.user32.SendMessageW(hwnd, WM_RBUTTONUP, 0, lParam)
 
@@ -124,10 +124,15 @@ while True:
     #     moveTo(hwnd, result[0], result[1])
     #     click(hwnd, result[0], result[1], 'left')
 
-    #PICK UP SPEARS
+    # #PICK UP SPEARS
+    time.sleep(0.3)
     img = look_screen()
     result = find_image(img, np.spear)
-    print('result', result)
+    print('spear found', result)
     if result: 
         moveTo(hwnd, result[0], result[1])
-        dragTo(hwnd, result[0], result[1], 'left')
+        drag(hwnd, result[0], result[1], 'left')
+        print('pickin up the spear')
+        time.sleep(0.3)
+        moveTo(hwnd, 1590,442)
+        release(hwnd, result[0], result[1], 'left')
